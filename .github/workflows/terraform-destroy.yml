@@ -35,5 +35,4 @@ jobs:
           terraform init  -migrate-state
           terraform destroy -auto-approve \
             -var="environment_name=dev" \
-            -var="aws_account_id=${{ secrets.AWS_ACCOUNT_ID }}" \
             -var="aws_region=${{ secrets.AWS_REGION }}"

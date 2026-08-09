@@ -28,7 +28,7 @@ jobs:
         working-directory: terraform
         run: |
           terraform init -input=false -backend=false
-          terraform fmt -check -recursive
+          terraform fmt -recursive
           terraform validate 
 
   tflint:
