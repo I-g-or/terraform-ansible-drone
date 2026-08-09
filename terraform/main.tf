@@ -36,7 +36,7 @@ module "ec2" {
   instance_type = var.instance_type
 
   subnet_id              = module.vpc.public_subnets[0]
-  vpc_security_group_ids = [module.security_group.security_group_id]
+  vpc_security_group_ids = [module.security_group.id]
 
   iam_instance_profile = module.ec2_iam_role.instance_profile_name
 
