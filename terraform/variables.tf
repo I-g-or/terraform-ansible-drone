@@ -2,17 +2,9 @@ variable "environment_name" {
   type = string
 }
 
-variable "tags" {
-  description = "List of tags to be associated with resources."
-  default     = {}
-}
-
-variable "aws_account_id" {
-  type = string
-}
-
 variable "aws_region" {
   description = "AWS region"
+  type        = string
   default     = "us-east-1"
 }
 
