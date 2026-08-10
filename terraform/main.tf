@@ -42,6 +42,8 @@ module "ec2" {
 
   associate_public_ip_address = true
 
+  enable_volume_tags = false
+
   root_block_device = {
     volume_size = 20
     volume_type = "gp3"
