@@ -1,0 +1,10 @@
+---
+common_packages:
+  - curl
+  - wget
+  - git
+  - unzip
+  - tar
+  - ca-certificates
+  - python3
+  - python3-pip

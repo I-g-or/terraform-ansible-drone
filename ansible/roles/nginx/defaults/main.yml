@@ -1,0 +1,6 @@
+---
+nginx_conf_dir: /etc/nginx/conf.d
+
+nginx_server_name: "{{ domain_name | default('igor1.pp.ua') }}"
+
+
