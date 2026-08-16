@@ -14,5 +14,5 @@
     - role: nginx
       tags: [nginx]
 
-    - role: certbot
-      tags: [certbot]
+    # - role: certbot
+    #   tags: [certbot]
