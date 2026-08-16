@@ -1,0 +1,25 @@
+---
+plugin: amazon.aws.aws_ec2
+
+regions:
+  - us-east-1
+
+filters:
+  tag:Name:
+    - drone-server
+  instance-state-name:
+    - running
+
+hostnames:
+  - tag:Name
+  - instance-id
+
+compose:
+  ansible_host: instance_id
+  ansible_aws_ssm_instance_id: instance_id
+
+keyed_groups:
+  - key: tags.Name
+    prefix: tag_Name
+  - key: instance_state
+    prefix: state

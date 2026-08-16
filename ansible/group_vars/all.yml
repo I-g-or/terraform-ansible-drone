@@ -1,0 +1,14 @@
+---
+ansible_connection: amazon.aws.aws_ssm
+ansible_aws_ssm_region: "us-east-1"
+ansible_aws_ssm_bucket_name: "dev-terraform-ansible-ssm-i-g-or"
+ansible_python_interpreter: /usr/bin/python3
+ansible_aws_ssm_timeout: 60
+
+domain_name: "igor1.pp.ua"
+certbot_email: "igorrosp@gmail.com"
+
+drone_dir: "/opt/drone"
+
+drone_server_host: "igor1.pp.ua"
+drone_server_proto: "https"

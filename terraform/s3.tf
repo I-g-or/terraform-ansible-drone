@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "ansible_ssm" {
-  bucket_prefix = "terraform-ansible-ssm"
+  bucket = "${var.environment_name}-terraform-ansible-ssm-i-g-or"
   force_destroy = true
 
   tags = {

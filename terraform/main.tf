@@ -29,7 +29,7 @@ module "ec2" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "6.0"
 
-  name = "igor1"
+  name = "drone-server"
 
   ami = data.aws_ssm_parameter.ec2_ami.value
 
@@ -56,6 +56,7 @@ module "ec2" {
   # EOF
 
   tags = {
+    Name        = "drone-server"
     Project     = "terraform-ansible-drone"
     Environment = var.environment_name
     ManagedBy   = "terraform"
