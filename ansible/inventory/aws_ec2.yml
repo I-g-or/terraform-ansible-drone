@@ -5,7 +5,7 @@ regions:
   - us-east-1
 
 filters:
-  ec2_tags:Name:
+  tag:Name:
     - drone-server
   instance-state-name:
     - running
