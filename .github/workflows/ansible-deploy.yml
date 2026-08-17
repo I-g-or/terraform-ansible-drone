@@ -53,4 +53,4 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           ANSIBLE_CONFIG: ansible_config.cfg
         run: |
-          ansible-playbook playbooks/site.yml -i inventory/aws_ec2.yml -v
+          ansible-playbook playbooks/site.yml -i inventory/aws_ec2.yml -vvv
