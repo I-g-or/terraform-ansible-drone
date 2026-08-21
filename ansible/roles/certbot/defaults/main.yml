@@ -1,6 +1,6 @@
 ---
-certbot_email: "{{ certbot_email | default('igorrosp@gmail.com') }}"
-certbot_domain: "{{ domain_name | default('igor1.pp.ua') }}"
+certbot_email: "igorrosp@gmail.com"
+certbot_domain: "igor1.pp.ua"
 certbot_webroot: "/var/www/certbot"
 certbot_staging: false
 
