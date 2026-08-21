@@ -1,8 +1,9 @@
 ---
-- name: Install Certbot
+- name: Install Certbot and cronie
   ansible.builtin.dnf:
     name:
       - certbot
+      - cronie
     state: present
 
 - name: Obtain Let's Encrypt certificate via webroot
