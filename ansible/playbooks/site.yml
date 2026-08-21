@@ -16,3 +16,6 @@
 
     - role: certbot
       tags: [certbot]
+
+    - role: drone
+      tags: [drone]      

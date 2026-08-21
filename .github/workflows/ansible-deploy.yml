@@ -33,7 +33,6 @@ jobs:
           pip install ansible boto3 botocore
           ansible-galaxy collection install amazon.aws community.general --force
 
-      # 5. Устанавливаем Session Manager Plugin (обязательно для aws_ssm)
       - name: Install AWS Session Manager Plugin
         run: |
           curl -s "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o session-manager-plugin.deb
@@ -54,4 +53,9 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           ANSIBLE_CONFIG: ansible_config.cfg
         run: |
-          ansible-playbook playbooks/site.yml -i inventory/aws_ssm.yml -v
+          ansible-playbook playbooks/site.yml \
+            -i inventory/aws_ec2.yml \
+            -e "drone_github_client_id=${{ secrets.DRONE_GITHUB_CLIENT_ID }}" \
+            -e "drone_github_client_secret=${{ secrets.DRONE_GITHUB_CLIENT_SECRET }}" \
+            -e "drone_rpc_secret=${{ secrets.DRONE_RPC_SECRET }}" \
+            -vvv
