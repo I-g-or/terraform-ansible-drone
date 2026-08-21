@@ -1,4 +1,7 @@
 ---
+drone_server_host: "igor1.pp.ua"
+drone_server_proto: "https"
+
 drone_dir: "/opt/drone"
 
 drone_server_image: "drone/drone:2"
