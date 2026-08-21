@@ -53,4 +53,9 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           ANSIBLE_CONFIG: ansible_config.cfg
         run: |
-          ansible-playbook playbooks/site.yml -i inventory/aws_ec2.yml -vvv
+          ansible-playbook playbooks/site.yml \
+            -i inventory/aws_ec2.yml \
+            -e "drone_github_client_id=${{ secrets.DRONE_GITHUB_CLIENT_ID }}" \
+            -e "drone_github_client_secret=${{ secrets.DRONE_GITHUB_CLIENT_SECRET }}" \
+            -e "drone_rpc_secret=${{ secrets.DRONE_RPC_SECRET }}" \
+            -vvv

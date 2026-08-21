@@ -9,3 +9,34 @@
     name: nginx
     state: started
     enabled: true
+
+######
+- name: Create ACME webroot
+  ansible.builtin.file:
+    path: "{{ nginx_acme_webroot }}/.well-known/acme-challenge"
+    state: directory
+    mode: "0755"
+
+- name: Remove default config
+  ansible.builtin.file:
+    path: "{{ nginx_conf_dir }}/default.conf"
+    state: absent
+  notify: Reload nginx
+
+- name: Deploy HTTP config for ACME
+  ansible.builtin.template:
+    src: http.conf.j2
+    dest: "{{ nginx_conf_dir }}/00-http.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Validate Nginx config
+  ansible.builtin.command: nginx -t
+  changed_when: false
+
+- name: Reload Nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: reloaded

@@ -1,0 +1,45 @@
+---
+- name: Install Certbot
+  ansible.builtin.dnf:
+    name:
+      - certbot
+    state: present
+
+- name: Obtain Let's Encrypt certificate via webroot
+  ansible.builtin.command:
+    cmd: >
+      certbot certonly
+      --webroot
+      --webroot-path  {{ certbot_webroot }}
+      --email {{ certbot_email }}
+      --domains {{ certbot_domain }}
+      --non-interactive
+      --agree-tos
+  args:
+    creates: "/etc/letsencrypt/live/{{ certbot_domain }}/fullchain.pem"
+
+- name: Configure Nginx HTTPS config (ssl_certificate + proxy to Drone)
+  ansible.builtin.template:
+    src: https.conf.j2
+    dest: "{{ nginx_conf_dir }}/10-https.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Validate Nginx config
+  ansible.builtin.command: nginx -t
+  changed_when: false
+
+- name: Reload Nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: reloaded
+
+- name: Cron renew + reload Nginx
+  ansible.builtin.cron:
+    name: "Certbot renew"
+    minute: "0"
+    hour: "12"
+    job: "certbot renew --quiet --deploy-hook 'systemctl reload nginx'"
+    user: root
