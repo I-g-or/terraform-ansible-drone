@@ -1,0 +1,13 @@
+---
+dependencies:
+  - role: common
+    tags: [common]
+
+  - role: docker
+    tags: [docker]
+
+  - role: node_exporter
+    tags: [node_exporter]
+
+  # - role: prometheus
+  #   tags: [prometheus]

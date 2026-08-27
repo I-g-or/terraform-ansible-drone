@@ -1,6 +1,6 @@
 ---
 - name: Configure drone server (Docker + Nginx + Let's Encrypt)
-  hosts: all
+  hosts: tag_Name_drone_server
   become: true
   gather_facts: true
 
@@ -18,4 +18,4 @@
       tags: [certbot]
 
     - role: drone
-      tags: [drone]      
+      tags: [drone]

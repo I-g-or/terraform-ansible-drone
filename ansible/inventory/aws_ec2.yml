@@ -7,6 +7,7 @@ regions:
 filters:
   tag:Name:
     - drone-server
+    - monitoring
   instance-state-name:
     - running
 
