@@ -21,13 +21,13 @@ module "security_group" {
       cidr_ipv4 = "0.0.0.0/0"
       description = "HTTP"
     }
-    # ssh = {
-    #   from_port   = 22
-    #   to_port     = 22
-    #   ip_protocol    = "tcp"
-    #   cidr_ipv4 = "0.0.0.0/0"
-    #   description = "SSH"
-    # }
+    node_exporter = {
+      from_port                = 9100
+      to_port                  = 9100
+      ip_protocol              = "tcp"
+      referenced_security_group_id = module.monitoring-sg.id
+      description              = "Node Exporter from monitoring"
+    }
   }
 
   egress_rules = {

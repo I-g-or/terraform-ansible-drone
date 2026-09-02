@@ -21,7 +21,7 @@
 
 - name: Configure Nginx HTTPS config (ssl_certificate + proxy to Drone)
   ansible.builtin.template:
-    src: https.conf.j2
+    src: "{{ certbot_nginx_conf_template }}"
     dest: "{{ nginx_conf_dir }}/10-https.conf"
     owner: root
     group: root

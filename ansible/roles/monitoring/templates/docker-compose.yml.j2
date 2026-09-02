@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  prometheus:
+    image: {{ prometheus_image }}
+    container_name: prometheus
+    restart: always
+    ports:
+      - "127.0.0.1:{{ prometheus_port }}:9090"
+    volumes:
+      - {{ monitoring_dir }}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - {{ monitoring_dir }}/prometheus/data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # чтобы Prometheus видел node_exporter на хосте
+    networks:
+      - monitoring
+
+  alertmanager:
+    image: {{ alertmanager_image }}
+    container_name: alertmanager
+    restart: always
+    ports:
+      - "127.0.0.1:{{ alertmanager_port }}:9093"
+    volumes:
+      - {{ monitoring_dir }}/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - {{ monitoring_dir }}/alertmanager/data:/alertmanager
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+    networks:
+      - monitoring
+
+  grafana:
+    image: {{ grafana_image }}
+    container_name: grafana
+    restart: always
+    ports:
+      - "127.0.0.1:{{ grafana_port }}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER={{ grafana_admin_user }}
+      - GF_SECURITY_ADMIN_PASSWORD={{ grafana_admin_password }}
+      - GF_SERVER_ROOT_URL={{ grafana_root_url }}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - {{ monitoring_dir }}/grafana/data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge

@@ -1,0 +1,21 @@
+---
+monitoring_dir: "/opt/monitoring"
+
+prometheus_image: "prom/prometheus:v2.54.1"
+grafana_image: "grafana/grafana:11.2.0"
+alertmanager_image: "prom/alertmanager:v0.27.0"
+
+prometheus_port: 9090
+grafana_port: 3000
+alertmanager_port: 9093
+
+# Grafana
+grafana_admin_user: "admin"
+grafana_admin_password: "admin"
+grafana_root_url: "https://grafana.igor1.pp.ua"
+
+# Prometheus
+prometheus_scrape_interval: "15s"
+prometheus_evaluation_interval: "15s"
+prometheus_targets:
+  - "host.docker.internal:9100"   # node_exporter on the monitoring-instance

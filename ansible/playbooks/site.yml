@@ -21,6 +21,9 @@
     - role: drone
       tags: [drone]
 
+    - role: node_exporter
+      tags: [node_exporter]
+
 # === Monitoring Server ===
 - name: Configure monitoring server
   hosts: tag_Name_monitoring

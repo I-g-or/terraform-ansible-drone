@@ -1,0 +1,82 @@
+---
+# === Automatic generation of the target list ===
+- name: Build prometheus_targets (monitoring + drone-server)
+  ansible.builtin.set_fact:
+    prometheus_targets: >-
+      {{
+        ['host.docker.internal:9100']
+        +
+        (
+          groups['tag_Name_drone_server']
+          | default([])
+          | map('extract', hostvars, 'private_ip_address')
+          | select('defined')
+          | map('regex_replace', '^(.*)$', '\1:9100')
+          | list
+        )
+      }}
+
+- name: Show final prometheus_targets (для отладки)
+  ansible.builtin.debug:
+    var: prometheus_targets
+
+- name: Create monitoring base directory
+  ansible.builtin.file:
+    path: "{{ monitoring_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Create subdirectories for configs and data
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  loop:
+    - "{{ monitoring_dir }}/prometheus"
+    - "{{ monitoring_dir }}/prometheus/data"
+    - "{{ monitoring_dir }}/grafana"
+    - "{{ monitoring_dir }}/grafana/data"
+    - "{{ monitoring_dir }}/alertmanager"
+    - "{{ monitoring_dir }}/alertmanager/data"
+
+- name: Deploy Prometheus configuration
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: "{{ monitoring_dir }}/prometheus/prometheus.yml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart monitoring stack
+
+- name: Deploy Alertmanager configuration
+  ansible.builtin.template:
+    src: alertmanager.yml.j2
+    dest: "{{ monitoring_dir }}/alertmanager/alertmanager.yml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart monitoring stack
+
+- name: Deploy docker-compose.yml for monitoring stack
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ monitoring_dir }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart monitoring stack
+
+- name: Start monitoring stack with docker compose
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ monitoring_dir }}"
+  register: monitoring_compose_result
+  changed_when: >
+    'Started' in monitoring_compose_result.stderr or
+    'Creating' in monitoring_compose_result.stderr or
+    'Recreating' in monitoring_compose_result.stderr or
+    'Running' in monitoring_compose_result.stderr

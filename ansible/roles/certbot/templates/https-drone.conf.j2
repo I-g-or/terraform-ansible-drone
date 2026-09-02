@@ -2,6 +2,7 @@
 
 server {
     listen 80;
+    listen [::]:80;
     server_name igor1.pp.ua;
     return 301 https://$host$request_uri;
 }
