@@ -40,10 +40,10 @@
     - "{{ monitoring_dir }}/prometheus/data"
     - "{{ monitoring_dir }}/grafana"
     - "{{ monitoring_dir }}/grafana/data"
-    - "{{ monitoring_dir }}/grafana/provisioning
-    - "{{ monitoring_dir }}/grafana/provisioning/datasources
-    - "{{ monitoring_dir }}/grafana/provisioning/dashboards
-    - "{{ monitoring_dir }}/grafana/dashboards
+    - "{{ monitoring_dir }}/grafana/provisioning"
+    - "{{ monitoring_dir }}/grafana/provisioning/datasources"
+    - "{{ monitoring_dir }}/grafana/provisioning/dashboards"
+    - "{{ monitoring_dir }}/grafana/dashboards"
     - "{{ monitoring_dir }}/alertmanager"
     - "{{ monitoring_dir }}/alertmanager/data"
 
