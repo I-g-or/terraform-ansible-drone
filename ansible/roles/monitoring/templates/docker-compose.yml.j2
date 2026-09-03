@@ -4,6 +4,7 @@ services:
   prometheus:
     image: {{ prometheus_image }}
     container_name: prometheus
+    user: "root"
     restart: always
     ports:
       - "127.0.0.1:{{ prometheus_port }}:9090"
@@ -22,6 +23,7 @@ services:
   alertmanager:
     image: {{ alertmanager_image }}
     container_name: alertmanager
+    user: "root"
     restart: always
     ports:
       - "127.0.0.1:{{ alertmanager_port }}:9093"
@@ -37,6 +39,7 @@ services:
   grafana:
     image: {{ grafana_image }}
     container_name: grafana
+    user: "root"
     restart: always
     ports:
       - "127.0.0.1:{{ grafana_port }}:3000"
