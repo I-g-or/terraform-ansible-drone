@@ -16,7 +16,7 @@
         )
       }}
 
-- name: Show final prometheus_targets (для отладки)
+- name: Show final prometheus_targets
   ansible.builtin.debug:
     var: prometheus_targets
 
@@ -48,7 +48,7 @@
     - "{{ monitoring_dir }}/alertmanager/data"
 
 - name: Deploy Grafana Prometheus datasource
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: grafana/provisioning/datasources/prometheus.yml
     dest: /opt/monitoring/grafana/provisioning/datasources/prometheus.yml
     owner: root
@@ -56,7 +56,7 @@
     mode: "0644"
 
 - name: Deploy Grafana dashboard provider
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: grafana/provisioning/dashboards/dashboards.yml
     dest: /opt/monitoring/grafana/provisioning/dashboards/dashboards.yml
     owner: root
