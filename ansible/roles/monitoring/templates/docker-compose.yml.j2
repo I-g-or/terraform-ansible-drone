@@ -10,13 +10,14 @@ services:
       - "127.0.0.1:{{ prometheus_port }}:9090"
     volumes:
       - {{ monitoring_dir }}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - {{ monitoring_dir }}/prometheus/rules:/etc/prometheus/rules:ro
       - {{ monitoring_dir }}/prometheus/data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
       - "--web.enable-lifecycle"
     extra_hosts:
-      - "host.docker.internal:host-gateway"   # чтобы Prometheus видел node_exporter на хосте
+      - "host.docker.internal:host-gateway"
     networks:
       - monitoring
 

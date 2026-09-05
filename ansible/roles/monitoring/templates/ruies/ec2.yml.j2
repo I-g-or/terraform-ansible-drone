@@ -1,0 +1,43 @@
+groups:
+  - name: ec2.rules
+    rules:
+      # === Test alert to verify Telegram notifications ===
+      - alert: TelegramTestAlert
+        expr: vector(1)
+        for: 0s
+        labels:
+          severity: info
+          test: "true"
+        annotations:
+          summary: "Test alert Telegram"
+          description: "If you see this message, Telegram notifications are working"
+
+      # === Instance is unavailable ===
+      - alert: InstanceDown
+        expr: up{job="node"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} unavailable"
+          description: "Node Exporter on {{ $labels.instance }} has not been responding for more than 1 minute"
+
+      # === High CPU usage ===
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage has been above 85% for more than 5 minutes (current value: {{ $value | printf \"%.1f\" }}%)"
+
+      # === Low available memory ===
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low available memory on {{ $labels.instance }}"
+          description: "More than 90% of RAM is being used (current value: {{ $value | printf \"%.1f\" }}%)"

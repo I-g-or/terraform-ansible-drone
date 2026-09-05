@@ -58,4 +58,6 @@ jobs:
             -e "drone_github_client_id=${{ secrets.DRONE_GITHUB_CLIENT_ID }}" \
             -e "drone_github_client_secret=${{ secrets.DRONE_GITHUB_CLIENT_SECRET }}" \
             -e "drone_rpc_secret=${{ secrets.DRONE_RPC_SECRET }}" \
+            -e "telegram_bot_token=${{ secrets.TELEGRAM_BOT_TOKEN }}" \
+            -e "telegram_chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
             -vvv

@@ -19,3 +19,7 @@ prometheus_scrape_interval: "15s"
 prometheus_evaluation_interval: "15s"
 prometheus_targets:
   - "host.docker.internal:9100"   # node_exporter on the monitoring-instance
+
+# Telegram
+telegram_bot_token: ""
+telegram_chat_id: ""

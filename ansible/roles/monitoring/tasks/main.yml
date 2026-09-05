@@ -38,6 +38,7 @@
   loop:
     - "{{ monitoring_dir }}/prometheus"
     - "{{ monitoring_dir }}/prometheus/data"
+    - "{{ monitoring_dir }}/prometheus/rules"
     - "{{ monitoring_dir }}/grafana"
     - "{{ monitoring_dir }}/grafana/data"
     - "{{ monitoring_dir }}/grafana/provisioning"
@@ -75,6 +76,15 @@
   ansible.builtin.template:
     src: prometheus.yml.j2
     dest: "{{ monitoring_dir }}/prometheus/prometheus.yml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart monitoring stack
+
+- name: Deploy Prometheus alerting rules
+  ansible.builtin.template:
+    src: rules/ec2.yml.j2
+    dest: "{{ monitoring_dir }}/prometheus/rules/ec2.yml"
     owner: root
     group: root
     mode: "0644"
