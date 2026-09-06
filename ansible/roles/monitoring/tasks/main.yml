@@ -64,13 +64,15 @@
     group: root
     mode: "0644"
 
-- name: Install Grafana dashboard
-  ansible.builtin.copy:
-    src: grafana/dashboards/node-exporter.json
-    dest: /opt/monitoring/grafana/dashboards/node-exporter.json
+- name: Download Node Exporter dashboard
+  ansible.builtin.get_url:
+    url: "{{ grafana_dashboard_node_exporter_url }}"
+    dest: "{{ monitoring_dir }}/grafana/dashboards/node-exporter.json"
     owner: root
     group: root
     mode: "0644"
+    force: true
+    timeout: 60
 
 - name: Deploy Prometheus configuration
   ansible.builtin.template:
