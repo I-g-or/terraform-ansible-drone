@@ -19,8 +19,10 @@ groups:
         labels:
           severity: critical
         annotations:
+{% raw %}        
           summary: "Instance {{ $labels.instance }} unavailable"
           description: "Node Exporter on {{ $labels.instance }} has not been responding for more than 1 minute"
+{% endraw %}
 
       # === High CPU usage ===
       - alert: HighCPUUsage
@@ -29,8 +31,10 @@ groups:
         labels:
           severity: warning
         annotations:
+{% raw %}        
           summary: "High CPU usage on {{ $labels.instance }}"
           description: "CPU usage has been above 85% for more than 5 minutes (current value: {{ $value | printf \"%.1f\" }}%)"
+{% endraw %}
 
       # === Low available memory ===
       - alert: HighMemoryUsage
@@ -39,5 +43,7 @@ groups:
         labels:
           severity: warning
         annotations:
+{% raw %}
           summary: "Low available memory on {{ $labels.instance }}"
           description: "More than 90% of RAM is being used (current value: {{ $value | printf \"%.1f\" }}%)"
+{% endraw %}
