@@ -17,8 +17,15 @@ scrape_configs:
       - targets: ["localhost:9090"]
 
   - job_name: "node"
-    static_configs:
-      - targets:
-{% for target in prometheus_targets %}
-          - "{{ target }}"
-{% endfor %}
+    ec2_sd_configs:
+      - region: us-east-1
+        port: 9100
+        refresh_interval: 30s
+        filters:
+          - name: tag:Name
+            values:
+              - drone-server
+              - monitoring
+          - name: instance-state-name
+            values:
+              - running
