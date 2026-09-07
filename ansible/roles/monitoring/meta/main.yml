@@ -6,6 +6,9 @@ dependencies:
   - role: docker
     tags: [docker]
 
+  - role: cloudwatch_agent 
+    tags: [cloudwatch_agent]
+
   - role: node_exporter
     tags: [node_exporter]
 

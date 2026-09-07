@@ -1,0 +1,68 @@
+{
+  "agent": {
+    "metrics_collection_interval": 60,
+    "run_as_user": "root",
+    "logfile": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log"
+  },
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "/var/log/messages",
+            "log_group_name": "{{ cloudwatch_log_group_prefix }}/system/messages",
+            "log_stream_name": "{instance_id}",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/secure",
+            "log_group_name": "{{ cloudwatch_log_group_prefix }}/system/secure",
+            "log_stream_name": "{instance_id}",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/dmesg",
+            "log_group_name": "{{ cloudwatch_log_group_prefix }}/system/dmesg",
+            "log_stream_name": "{instance_id}",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/docker",
+            "log_group_name": "{{ cloudwatch_log_group_prefix }}/docker/daemon",
+            "log_stream_name": "{instance_id}",
+            "timezone": "UTC"
+          },
+{% if cloudwatch_collect_nginx | default(true) %}
+          {
+            "file_path": "/var/log/nginx/access.log",
+            "log_group_name": "{{ cloudwatch_log_group_prefix }}/nginx/access",
+            "log_stream_name": "{instance_id}",
+            "timezone": "UTC"
+          },
+          {
+            "file_path": "/var/log/nginx/error.log",
+            "log_group_name": "{{ cloudwatch_log_group_prefix }}/nginx/error",
+            "log_stream_name": "{instance_id}",
+            "timezone": "UTC"
+          },
+{% endif %}
+{% if cloudwatch_collect_docker_containers | default(true) %}
+          {
+            "file_path": "/var/lib/docker/containers/*/*-json.log",
+            "log_group_name": "{{ cloudwatch_log_group_prefix }}/docker/containers",
+            "log_stream_name": "{instance_id}",
+            "timezone": "UTC"
+          },
+{% endif %}
+          {
+            "file_path": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log",
+            "log_group_name": "{{ cloudwatch_log_group_prefix }}/cloudwatch-agent",
+            "log_stream_name": "{instance_id}",
+            "timezone": "UTC"
+          }
+        ]
+      }
+    },
+    "force_flush_interval": 15
+  }
+}

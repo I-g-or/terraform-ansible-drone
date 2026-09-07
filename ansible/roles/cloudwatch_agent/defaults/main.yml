@@ -1,0 +1,8 @@
+---
+project_name: "terraform-ansible-drone"
+
+cloudwatch_log_group_prefix: "/{{ project_name }}"
+
+cloudwatch_collect_docker_containers: true
+
+cloudwatch_collect_nginx: true

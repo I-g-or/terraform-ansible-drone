@@ -1,0 +1,50 @@
+---
+- name: Install CloudWatch Agent
+  ansible.builtin.dnf:
+    name: amazon-cloudwatch-agent
+    state: present
+
+- name: Create CloudWatch Agent config directory
+  ansible.builtin.file:
+    path: /opt/aws/amazon-cloudwatch-agent/etc
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Deploy CloudWatch Agent configuration
+  ansible.builtin.template:
+    src: amazon-cloudwatch-agent.json.j2
+    dest: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart CloudWatch Agent
+
+- name: Start CloudWatch Agent with configuration
+  ansible.builtin.command:
+    cmd: >
+      /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl
+      -a fetch-config
+      -m ec2
+      -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+      -s
+  register: cloudwatch_agent_start
+  changed_when: >
+    'Running' in cloudwatch_agent_start.stdout or
+    'Successfully fetched the config' in cloudwatch_agent_start.stdout or
+    'config has been successfully fetched' in cloudwatch_agent_start.stdout
+  failed_when: false
+
+- name: Show CloudWatch Agent status
+  ansible.builtin.command:
+    cmd: >
+      /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl
+      -m ec2
+      -a status
+  register: cloudwatch_agent_status
+  changed_when: false
+
+- name: Display CloudWatch Agent status
+  ansible.builtin.debug:
+    var: cloudwatch_agent_status.stdout
