@@ -74,6 +74,16 @@
     force: true
     timeout: 60
 
+- name: Download Nginx Exporter dashboard
+  ansible.builtin.get_url:
+    url: "{{ grafana_dashboard_nginx_exporter_url }}"
+    dest: "{{ monitoring_dir }}/grafana/dashboards/nginx-exporter.json"
+    owner: root
+    group: root
+    mode: "0644"
+    force: true
+    timeout: 60   
+
 - name: Deploy Prometheus configuration
   ansible.builtin.template:
     src: prometheus.yml.j2

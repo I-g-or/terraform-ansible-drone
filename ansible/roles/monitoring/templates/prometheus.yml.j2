@@ -29,3 +29,17 @@ scrape_configs:
           - name: instance-state-name
             values:
               - running
+
+  - job_name: "nginx"
+    ec2_sd_configs:
+      - region: us-east-1
+        port: 9113
+        refresh_interval: 30s
+        filters:
+          - name: tag:Name
+            values:
+              - drone-server
+              - monitoring
+          - name: instance-state-name
+            values:
+              - running

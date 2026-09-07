@@ -14,6 +14,7 @@ grafana_admin_user: "admin"
 grafana_admin_password: "admin"
 grafana_root_url: "https://grafana.igor1.pp.ua"
 grafana_dashboard_node_exporter_url: "https://grafana.com/api/dashboards/1860/revisions/latest/download"
+grafana_dashboard_nginx_exporter_url: "https://raw.githubusercontent.com/nginx/nginx-prometheus-exporter/main/grafana/dashboard.json"
 
 # Prometheus
 prometheus_scrape_interval: "15s"

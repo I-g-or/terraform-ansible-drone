@@ -28,6 +28,14 @@ module "security_group" {
       referenced_security_group_id = module.monitoring-sg.id
       description              = "Node Exporter from monitoring"
     }
+
+    nginx_exporter = {
+      from_port                = 9113
+      to_port                  = 9113
+      ip_protocol              = "tcp"
+      referenced_security_group_id = module.monitoring-sg.id
+      description              = "Nginx Exporter from monitoring"
+    }
   }
 
   egress_rules = {
