@@ -9,12 +9,6 @@ server {
         root {{ certbot_webroot }};
     }
 
-    location /stub_status {
-        stub_status  on;
-        allow 127.0.0.1;
-        deny all;
-    }
-
     location / {
         return 301 https://$host$request_uri;
     }
@@ -53,5 +47,16 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 8080;
+    server_name localhost;
+
+    location /stub_status {
+        stub_status;
+        allow 127.0.0.1;
+        deny all;
     }
 }
