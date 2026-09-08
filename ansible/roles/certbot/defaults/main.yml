@@ -7,6 +7,6 @@ certbot_staging: false
 
 
 nginx_conf_dir: /etc/nginx/conf.d
-nginx_drone_upstream: "http://127.0.0.1:8080"
+nginx_drone_upstream: "http://127.0.0.1:8081"
 nginx_ssl_cert: "/etc/letsencrypt/live/{{ certbot_domain }}/fullchain.pem"
 nginx_ssl_key: "/etc/letsencrypt/live/{{ certbot_domain }}/privkey.pem"
