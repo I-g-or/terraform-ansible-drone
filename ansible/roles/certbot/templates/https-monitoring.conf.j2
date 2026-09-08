@@ -9,6 +9,12 @@ server {
         root {{ certbot_webroot }};
     }
 
+    location /stub_status {
+        stub_status  on;
+        allow 127.0.0.1;
+        deny all;
+    }
+
     location / {
         return 301 https://$host$request_uri;
     }
