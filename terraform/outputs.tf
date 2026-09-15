@@ -21,3 +21,11 @@ output "ansible_ssm_bucket_name" {
 output "security_group_id" {
   value = module.security_group.id
 }
+
+output "ec2_monitoring_id" {
+  value = module.ec2_monitoring.id
+}
+
+output "monitoring_public_ip" {
+  value = aws_eip.monitoring.public_ip
+}

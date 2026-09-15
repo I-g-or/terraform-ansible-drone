@@ -1,6 +1,7 @@
 ---
+# === Drone Server ===
 - name: Configure drone server (Docker + Nginx + Let's Encrypt)
-  hosts: all
+  hosts: tag_Name_drone_server
   become: true
   gather_facts: true
 
@@ -18,4 +19,19 @@
       tags: [certbot]
 
     - role: drone
-      tags: [drone]      
+      tags: [drone]
+
+    - role: node_exporter
+      tags: [node_exporter]
+
+    - role: nginx_exporter
+      tags: [nginx_exporter]    
+
+# === Monitoring Server ===
+- name: Configure monitoring server
+  hosts: tag_Name_monitoring
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: monitoring 

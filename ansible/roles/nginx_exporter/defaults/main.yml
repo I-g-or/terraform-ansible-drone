@@ -1,0 +1,8 @@
+---
+nginx_exporter_version: "1.5.3"
+nginx_exporter_arch: "linux_amd64"
+nginx_exporter_bin_path: "/usr/local/bin/nginx-prometheus-exporter"
+nginx_exporter_user: "nginx_exporter"
+nginx_exporter_group: "nginx_exporter"
+nginx_exporter_port: 9113
+nginx_exporter_scrape_uri: "http://127.0.0.1:8080/stub_status"

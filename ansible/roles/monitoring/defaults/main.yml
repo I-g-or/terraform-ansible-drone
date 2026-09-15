@@ -1,0 +1,27 @@
+---
+monitoring_dir: "/opt/monitoring"
+
+prometheus_image: "prom/prometheus:v2.54.1"
+grafana_image: "grafana/grafana:11.2.0"
+alertmanager_image: "prom/alertmanager:v0.27.0"
+
+prometheus_port: 9090
+grafana_port: 3000
+alertmanager_port: 9093
+
+# Grafana
+grafana_admin_user: "admin"
+grafana_admin_password: "admin"
+grafana_root_url: "https://grafana.igor1.pp.ua"
+grafana_dashboard_node_exporter_url: "https://grafana.com/api/dashboards/1860/revisions/latest/download"
+grafana_dashboard_nginx_exporter_url: "https://raw.githubusercontent.com/nginx/nginx-prometheus-exporter/main/grafana/dashboard.json"
+
+# Prometheus
+prometheus_scrape_interval: "15s"
+prometheus_evaluation_interval: "15s"
+prometheus_targets:
+  - "host.docker.internal:9100"   # node_exporter on the monitoring-instance
+
+# Telegram
+telegram_bot_token: ""
+telegram_chat_id: ""

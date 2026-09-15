@@ -1,0 +1,25 @@
+---
+dependencies:
+  - role: common
+    tags: [common]
+
+  - role: docker
+    tags: [docker]
+
+  - role: cloudwatch_agent 
+    tags: [cloudwatch_agent]
+
+  - role: node_exporter
+    tags: [node_exporter]
+
+  - role: nginx
+    tags: [nginx]
+
+  - role: certbot
+    tags: [certbot]
+    vars:
+      certbot_domain: "grafana.igor1.pp.ua"
+      certbot_nginx_conf_template: "https-monitoring.conf.j2"
+
+  - role: nginx_exporter
+    tags: [nginx_exporter]    

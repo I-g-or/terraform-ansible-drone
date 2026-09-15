@@ -2,6 +2,7 @@
 
 server {
     listen 80;
+    listen [::]:80;
     server_name igor1.pp.ua;
     return 301 https://$host$request_uri;
 }
@@ -29,5 +30,16 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_read_timeout 3600;
+    }
+}
+
+server {
+    listen 8080;
+    server_name localhost;
+
+    location /stub_status {
+        stub_status;
+        allow 127.0.0.1;
+        deny all;
     }
 }
